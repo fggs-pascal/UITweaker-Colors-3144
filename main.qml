@@ -30,6 +30,14 @@ Item {
 
     property point crosshairPos: Qt.point(width / 2, height / 2)
 
+    // Theme Manager instance (hosts the color editing UI popup)
+    ThemeManager {
+        id: themeManager
+        // Provide size hints so the embedded Popup can size relative to its parent
+        width: plugin.mainWindow ? plugin.mainWindow.width : 0
+        height: plugin.mainWindow ? plugin.mainWindow.height : 0
+    }
+
     // This is the key - track the displayPosition from coordinateLocator
     property point displayPosition: coordinateLocator ? coordinateLocator.displayPosition : Qt.point(width / 2, height / 2)
 
@@ -57,6 +65,7 @@ Item {
 
     Component.onCompleted: {
         iface.addItemToPluginsToolbar(makeItPinkButton);
+        iface.addItemToPluginsToolbar(themeUiButton);
 
         mapCanvas = iface.mapCanvas();
         if (mapCanvas) {
@@ -191,6 +200,17 @@ Item {
         onClicked: {
             layerTextSizeSettings.open();
             return;
+        }
+    }
+
+    QfToolButton {
+        id: themeUiButton
+        iconSource: 'icon.svg'
+        iconColor: Theme.accentColor
+        bgcolor: Theme.controlBackgroundColor
+        round: true
+        onClicked: {
+            if (themeManager && themeManager.openThemeDialog) themeManager.openThemeDialog();
         }
     }
 
