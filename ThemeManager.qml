@@ -871,7 +871,8 @@ Item {
     Settings {
         id: themeManagerSettings
         property bool useDarkTheme: false
-        property var customColors: {
+        property var customColors: {}
+        property var customColors3144: {
             "mainColor": "#134392",
             "mainOverlayColor": "#FCF8F3",
             "accentColor": "#4F98CB",
@@ -1069,6 +1070,7 @@ Item {
         } catch (e) {}
 
         selectedAppearance = themeManagerSettings.appearanceSelection || "system";
+        themeManagerSettings.customColors = themeManagerSettings.customColors3144;
         applyBaseAppearance(selectedAppearance, false);
     }
 
